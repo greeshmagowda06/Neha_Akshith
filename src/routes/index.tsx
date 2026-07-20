@@ -6,7 +6,7 @@ import { GiBigDiamondRing, GiLotus, GiIndianPalace } from "react-icons/gi";
 import kalash from "@/assets/kalash.png";
 import divider from "@/assets/divider.png";
 import diya from "@/assets/diya.png";
-import couple from "@/assets/couple.jpg";
+
 
 export const Route = createFileRoute("/")({ component: Invitation });
 

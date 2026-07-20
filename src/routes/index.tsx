@@ -4,7 +4,6 @@ import { createFileRoute } from "@tanstack/react-router";
 import { FiCalendar, FiMapPin, FiMusic, FiPause, FiHeart } from "react-icons/fi";
 import { GiBigDiamondRing, GiLotus, GiIndianPalace } from "react-icons/gi";
 import kalash from "@/assets/kalash.png";
-import corner from "@/assets/corner.png";
 import divider from "@/assets/divider.png";
 import diya from "@/assets/diya.png";
 import couple from "@/assets/couple.jpg";

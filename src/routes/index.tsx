@@ -425,26 +425,6 @@ function Invitation() {
 
       {/* Hero */}
       <section className="relative flex min-h-screen items-center justify-center px-4 py-16">
-        {/* decorative corners */}
-        {(["tl","tr","bl","br"] as const).map((pos) => (
-          <img
-            key={pos}
-            src={corner}
-            alt=""
-            className="pointer-events-none absolute h-28 w-28 opacity-90 md:h-40 md:w-40"
-            loading="lazy"
-            style={{
-              top: pos.startsWith("t") ? 16 : "auto",
-              bottom: pos.startsWith("b") ? 16 : "auto",
-              left: pos.endsWith("l") ? 16 : "auto",
-              right: pos.endsWith("r") ? 16 : "auto",
-              transform:
-                pos === "tr" ? "scaleX(-1)" :
-                pos === "bl" ? "scaleY(-1)" :
-                pos === "br" ? "scale(-1,-1)" : "",
-            }}
-          />
-        ))}
 
         {/* swinging bells */}
         <div className="pointer-events-none absolute left-6 top-6 hidden text-4xl text-gold animate-bell-swing md:block">🔔</div>

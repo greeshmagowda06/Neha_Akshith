@@ -287,35 +287,6 @@ function Countdown() {
   );
 }
 
-function Gallery() {
-  const items = [
-    { rot: -3, y: 0 }, { rot: 2, y: 20 }, { rot: -1, y: 10 }, { rot: 3, y: 0 },
-  ];
-  return (
-    <div className="grid grid-cols-2 gap-4 md:grid-cols-4 md:gap-6">
-      {items.map((it, i) => (
-        <motion.div
-          key={i}
-          className="group relative aspect-[3/4] overflow-hidden rounded-2xl gold-border"
-          style={{ transform: `translateY(${it.y}px) rotate(${it.rot}deg)` }}
-          initial={{ opacity: 0, y: 60 }}
-          whileInView={{ opacity: 1, y: it.y }}
-          viewport={{ once: true }}
-          transition={{ duration: 1, delay: i * 0.1 }}
-          whileHover={{ scale: 1.05, rotate: 0, zIndex: 10 }}
-        >
-          <img
-            src={couple}
-            alt="Engagement"
-            className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
-            loading="lazy"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-maroon/50 via-transparent to-transparent" />
-        </motion.div>
-      ))}
-    </div>
-  );
-}
 
 function RSVP() {
   const [submitted, setSubmitted] = useState(false);

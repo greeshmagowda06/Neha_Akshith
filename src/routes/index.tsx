@@ -4,10 +4,9 @@ import { createFileRoute } from "@tanstack/react-router";
 import { FiCalendar, FiMapPin, FiMusic, FiPause, FiHeart } from "react-icons/fi";
 import { GiBigDiamondRing, GiLotus, GiIndianPalace } from "react-icons/gi";
 import kalash from "@/assets/kalash.png";
-import corner from "@/assets/corner.png";
 import divider from "@/assets/divider.png";
 import diya from "@/assets/diya.png";
-import couple from "@/assets/couple.jpg";
+
 
 export const Route = createFileRoute("/")({ component: Invitation });
 
@@ -135,29 +134,10 @@ function IntroOverlay({ onDone }: { onDone: () => void }) {
         transition={{ duration: 1 }}
       >🔔</motion.div>
 
-      {/* frame corners */}
+      {/* frame */}
       <div className="relative h-[70vh] w-[90vw] max-w-2xl">
-        {(["tl","tr","bl","br"] as const).map((pos, i) => (
-          <motion.img
-            key={pos}
-            src={corner}
-            alt=""
-            className="absolute h-24 w-24 md:h-32 md:w-32"
-            style={{
-              top: pos.startsWith("t") ? 0 : "auto",
-              bottom: pos.startsWith("b") ? 0 : "auto",
-              left: pos.endsWith("l") ? 0 : "auto",
-              right: pos.endsWith("r") ? 0 : "auto",
-              transform:
-                pos === "tr" ? "scaleX(-1)" :
-                pos === "bl" ? "scaleY(-1)" :
-                pos === "br" ? "scale(-1,-1)" : "",
-            }}
-            initial={{ opacity: 0, scale: 0.3 }}
-            animate={{ opacity: phase >= 1 ? 1 : 0, scale: phase >= 1 ? 1 : 0.3 }}
-            transition={{ duration: 0.8, delay: 0.1 * i }}
-          />
-        ))}
+
+
 
         {/* diyas */}
         <motion.img
@@ -307,35 +287,6 @@ function Countdown() {
   );
 }
 
-function Gallery() {
-  const items = [
-    { rot: -3, y: 0 }, { rot: 2, y: 20 }, { rot: -1, y: 10 }, { rot: 3, y: 0 },
-  ];
-  return (
-    <div className="grid grid-cols-2 gap-4 md:grid-cols-4 md:gap-6">
-      {items.map((it, i) => (
-        <motion.div
-          key={i}
-          className="group relative aspect-[3/4] overflow-hidden rounded-2xl gold-border"
-          style={{ transform: `translateY(${it.y}px) rotate(${it.rot}deg)` }}
-          initial={{ opacity: 0, y: 60 }}
-          whileInView={{ opacity: 1, y: it.y }}
-          viewport={{ once: true }}
-          transition={{ duration: 1, delay: i * 0.1 }}
-          whileHover={{ scale: 1.05, rotate: 0, zIndex: 10 }}
-        >
-          <img
-            src={couple}
-            alt="Engagement"
-            className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
-            loading="lazy"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-maroon/50 via-transparent to-transparent" />
-        </motion.div>
-      ))}
-    </div>
-  );
-}
 
 function RSVP() {
   const [submitted, setSubmitted] = useState(false);
@@ -474,26 +425,6 @@ function Invitation() {
 
       {/* Hero */}
       <section className="relative flex min-h-screen items-center justify-center px-4 py-16">
-        {/* decorative corners */}
-        {(["tl","tr","bl","br"] as const).map((pos) => (
-          <img
-            key={pos}
-            src={corner}
-            alt=""
-            className="pointer-events-none absolute h-28 w-28 opacity-90 md:h-40 md:w-40"
-            loading="lazy"
-            style={{
-              top: pos.startsWith("t") ? 16 : "auto",
-              bottom: pos.startsWith("b") ? 16 : "auto",
-              left: pos.endsWith("l") ? 16 : "auto",
-              right: pos.endsWith("r") ? 16 : "auto",
-              transform:
-                pos === "tr" ? "scaleX(-1)" :
-                pos === "bl" ? "scaleY(-1)" :
-                pos === "br" ? "scale(-1,-1)" : "",
-            }}
-          />
-        ))}
 
         {/* swinging bells */}
         <div className="pointer-events-none absolute left-6 top-6 hidden text-4xl text-gold animate-bell-swing md:block">🔔</div>
@@ -642,16 +573,6 @@ function Invitation() {
 
       <Divider />
 
-      {/* Gallery */}
-      <section className="px-4 py-16">
-        <FadeUp>
-          <h2 className="mb-2 text-center font-display text-4xl text-maroon md:text-5xl">Our Journey</h2>
-          <p className="mb-12 text-center font-serif italic text-maroon/60">A few moments together</p>
-        </FadeUp>
-        <div className="mx-auto max-w-6xl"><Gallery /></div>
-      </section>
-
-      <Divider />
 
       {/* Blessings */}
       <section className="px-4 py-16">

@@ -134,29 +134,10 @@ function IntroOverlay({ onDone }: { onDone: () => void }) {
         transition={{ duration: 1 }}
       >🔔</motion.div>
 
-      {/* frame corners */}
+      {/* frame */}
       <div className="relative h-[70vh] w-[90vw] max-w-2xl">
-        {(["tl","tr","bl","br"] as const).map((pos, i) => (
-          <motion.img
-            key={pos}
-            src={corner}
-            alt=""
-            className="absolute h-24 w-24 md:h-32 md:w-32"
-            style={{
-              top: pos.startsWith("t") ? 0 : "auto",
-              bottom: pos.startsWith("b") ? 0 : "auto",
-              left: pos.endsWith("l") ? 0 : "auto",
-              right: pos.endsWith("r") ? 0 : "auto",
-              transform:
-                pos === "tr" ? "scaleX(-1)" :
-                pos === "bl" ? "scaleY(-1)" :
-                pos === "br" ? "scale(-1,-1)" : "",
-            }}
-            initial={{ opacity: 0, scale: 0.3 }}
-            animate={{ opacity: phase >= 1 ? 1 : 0, scale: phase >= 1 ? 1 : 0.3 }}
-            transition={{ duration: 0.8, delay: 0.1 * i }}
-          />
-        ))}
+
+
 
         {/* diyas */}
         <motion.img

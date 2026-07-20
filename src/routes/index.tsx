@@ -622,16 +622,6 @@ function Invitation() {
 
       <Divider />
 
-      {/* Gallery */}
-      <section className="px-4 py-16">
-        <FadeUp>
-          <h2 className="mb-2 text-center font-display text-4xl text-maroon md:text-5xl">Our Journey</h2>
-          <p className="mb-12 text-center font-serif italic text-maroon/60">A few moments together</p>
-        </FadeUp>
-        <div className="mx-auto max-w-6xl"><Gallery /></div>
-      </section>
-
-      <Divider />
 
       {/* Blessings */}
       <section className="px-4 py-16">

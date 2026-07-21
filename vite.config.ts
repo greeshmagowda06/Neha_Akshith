@@ -5,6 +5,7 @@ import tsconfigPaths from "vite-tsconfig-paths";
 import { tanstackStart } from "@tanstack/react-start/plugin/vite";
 
 export default defineConfig({
+  base: "/Neha_Akshith/",
   plugins: [
     tanstackStart({
       server: { entry: "server" },

@@ -384,7 +384,7 @@ function Fireworks({ show }: { show: boolean }) {
 /* ------------ Main ------------ */
 function Invitation() {
   const [intro, setIntro] = useState(true);
-  const [musicOn, setMusicOn] = useState(false);
+  
   const [reachedEnd, setReachedEnd] = useState(false);
   const { scrollYProgress } = useScroll();
   const progress = useSpring(scrollYProgress, { stiffness: 100, damping: 30 });

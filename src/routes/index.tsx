@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { motion, AnimatePresence, useScroll, useSpring, useTransform } from "framer-motion";
+import { motion, AnimatePresence, useScroll, useSpring, useTransform } from "@/lib/motion";
 import { createFileRoute } from "@tanstack/react-router";
 import { FiCalendar, FiMapPin, FiHeart } from "react-icons/fi";
 import { GiBigDiamondRing, GiLotus, GiIndianPalace } from "react-icons/gi";

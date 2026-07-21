@@ -414,14 +414,6 @@ function Invitation() {
         style={{ width: progressWidth, boxShadow: "0 0 15px rgba(200,155,60,0.8)" }}
       />
 
-      {/* Music toggle */}
-      <button
-        onClick={() => setMusicOn((v) => !v)}
-        className="fixed bottom-6 right-6 z-40 flex items-center gap-2 rounded-full border border-gold/60 bg-ivory/90 px-5 py-3 font-serif text-sm text-maroon shadow-[0_10px_30px_-10px_rgba(90,14,26,0.4)] backdrop-blur transition hover:scale-105 hover:shadow-[0_0_30px_rgba(200,155,60,0.5)]"
-      >
-        {musicOn ? <FiPause /> : <FiMusic />}
-        {musicOn ? "Pause" : "Play Music"}
-      </button>
 
       {/* Hero */}
       <section className="relative flex min-h-screen items-center justify-center px-4 py-16">

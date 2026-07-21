@@ -613,13 +613,6 @@ function Invitation() {
         With love · Bengaluru · 2026
       </footer>
 
-      {/* Music */}
-      {musicOn && (
-        <audio
-          autoPlay loop
-          src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_5f27c0a3d1.mp3?filename=indian-classical-flute-116742.mp3"
-        />
-      )}
     </div>
   );
 }

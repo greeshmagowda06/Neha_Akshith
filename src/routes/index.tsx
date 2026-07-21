@@ -126,13 +126,6 @@ function IntroOverlay({ onDone }: { onDone: () => void }) {
         ))}
       </div>
 
-      {/* bells */}
-      <motion.div
-        className="absolute top-8 left-1/2 -translate-x-1/2 text-6xl text-gold animate-bell-swing"
-        initial={{ opacity: 0, y: -30 }}
-        animate={{ opacity: phase >= 0 ? 0.8 : 0, y: 0 }}
-        transition={{ duration: 1 }}
-      >🔔</motion.div>
 
       {/* frame */}
       <div className="relative h-[70vh] w-[90vw] max-w-2xl">

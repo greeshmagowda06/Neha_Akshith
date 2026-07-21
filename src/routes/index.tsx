@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence, useScroll, useSpring, useTransform } from "@/lib/motion";
+import { sendRsvpEmail } from "@/lib/rsvp-email";
 import { createFileRoute } from "@tanstack/react-router";
 import { FiCalendar, FiMapPin, FiHeart } from "react-icons/fi";
 import { GiBigDiamondRing, GiLotus, GiIndianPalace } from "react-icons/gi";
@@ -283,44 +284,72 @@ function Countdown() {
 
 function RSVP() {
   const [submitted, setSubmitted] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const [ripple, setRipple] = useState<{ x: number; y: number } | null>(null);
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setError(null);
+    setSending(true);
+
+    const formData = new FormData(e.currentTarget);
+    const payload = {
+      name: String(formData.get("name") ?? "").trim(),
+      phone: String(formData.get("phone") ?? "").trim(),
+      guests: Number(formData.get("guests") ?? 1),
+      reception: formData.get("reception") === "on",
+      wedding: formData.get("wedding") === "on",
+    };
+
+    try {
+      await sendRsvpEmail({ data: payload });
+      setSubmitted(true);
+    } catch (submitError) {
+      setError(submitError instanceof Error ? submitError.message : "Unable to send RSVP right now.");
+    } finally {
+      setSending(false);
+    }
+  };
+
   return (
     <form
       className="glass-card mx-auto max-w-xl space-y-5 rounded-3xl p-8 md:p-10"
-      onSubmit={(e) => { e.preventDefault(); setSubmitted(true); }}
+      onSubmit={handleSubmit}
     >
       <div>
         <label className="mb-1 block font-serif text-sm uppercase tracking-[0.2em] text-gold">Name</label>
-        <input required className="w-full rounded-lg border border-gold/40 bg-ivory/70 px-4 py-3 font-serif text-maroon outline-none transition focus:border-gold focus:shadow-[0_0_20px_rgba(200,155,60,0.3)]" />
+        <input name="name" required className="w-full rounded-lg border border-gold/40 bg-ivory/70 px-4 py-3 font-serif text-maroon outline-none transition focus:border-gold focus:shadow-[0_0_20px_rgba(200,155,60,0.3)]" />
       </div>
       <div>
         <label className="mb-1 block font-serif text-sm uppercase tracking-[0.2em] text-gold">Phone</label>
-        <input required type="tel" className="w-full rounded-lg border border-gold/40 bg-ivory/70 px-4 py-3 font-serif text-maroon outline-none transition focus:border-gold focus:shadow-[0_0_20px_rgba(200,155,60,0.3)]" />
+        <input name="phone" required type="tel" className="w-full rounded-lg border border-gold/40 bg-ivory/70 px-4 py-3 font-serif text-maroon outline-none transition focus:border-gold focus:shadow-[0_0_20px_rgba(200,155,60,0.3)]" />
       </div>
       <div>
         <label className="mb-1 block font-serif text-sm uppercase tracking-[0.2em] text-gold">Guests</label>
-        <input required type="number" min={1} defaultValue={1} className="w-full rounded-lg border border-gold/40 bg-ivory/70 px-4 py-3 font-serif text-maroon outline-none transition focus:border-gold focus:shadow-[0_0_20px_rgba(200,155,60,0.3)]" />
+        <input name="guests" required type="number" min={1} defaultValue={1} className="w-full rounded-lg border border-gold/40 bg-ivory/70 px-4 py-3 font-serif text-maroon outline-none transition focus:border-gold focus:shadow-[0_0_20px_rgba(200,155,60,0.3)]" />
       </div>
       <div className="grid grid-cols-2 gap-4">
         <label className="flex items-center gap-3 rounded-lg border border-gold/40 bg-ivory/70 px-4 py-3 font-serif text-maroon">
-          <input type="checkbox" defaultChecked className="h-4 w-4 accent-[#c89b3c]" />
+          <input name="reception" type="checkbox" defaultChecked className="h-4 w-4 accent-[#c89b3c]" />
           Reception
         </label>
         <label className="flex items-center gap-3 rounded-lg border border-gold/40 bg-ivory/70 px-4 py-3 font-serif text-maroon">
-          <input type="checkbox" defaultChecked className="h-4 w-4 accent-[#c89b3c]" />
+          <input name="wedding" type="checkbox" defaultChecked className="h-4 w-4 accent-[#c89b3c]" />
           Wedding
         </label>
       </div>
       <button
         type="submit"
+        disabled={sending}
         onClick={(e) => {
           const r = (e.currentTarget as HTMLButtonElement).getBoundingClientRect();
           setRipple({ x: e.clientX - r.left, y: e.clientY - r.top });
           setTimeout(() => setRipple(null), 700);
         }}
-        className="relative w-full overflow-hidden rounded-full bg-gradient-to-r from-[#8a6a24] via-[#c89b3c] to-[#f4d98a] px-8 py-4 font-display text-lg text-ivory shadow-[0_10px_30px_-10px_rgba(200,155,60,0.7)] transition hover:scale-[1.02] hover:shadow-[0_15px_40px_-10px_rgba(200,155,60,0.9)]"
+        className="relative w-full overflow-hidden rounded-full bg-gradient-to-r from-[#8a6a24] via-[#c89b3c] to-[#f4d98a] px-8 py-4 font-display text-lg text-ivory shadow-[0_10px_30px_-10px_rgba(200,155,60,0.7)] transition hover:scale-[1.02] hover:shadow-[0_15px_40px_-10px_rgba(200,155,60,0.9)] disabled:cursor-not-allowed disabled:opacity-70"
       >
-        {submitted ? "Thank you — see you there ❤" : "Send Blessing"}
+        {submitted ? "Blessing sent" : sending ? "Sending..." : "Send Blessing"}
         {ripple && (
           <span
             className="pointer-events-none absolute rounded-full bg-white/60"
@@ -332,6 +361,7 @@ function RSVP() {
           />
         )}
       </button>
+      {error && <p className="text-center font-serif text-sm text-red-700">{error}</p>}
     </form>
   );
 }

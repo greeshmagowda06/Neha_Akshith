@@ -412,8 +412,6 @@ function Invitation() {
       <section className="relative flex min-h-screen items-center justify-center px-4 py-16">
 
         {/* swinging bells */}
-        <div className="pointer-events-none absolute left-6 top-6 hidden text-4xl text-gold animate-bell-swing md:block">🔔</div>
-        <div className="pointer-events-none absolute right-6 top-6 hidden text-4xl text-gold animate-bell-swing md:block" style={{ animationDelay: "0.5s" }}>🔔</div>
 
         <div className="relative mx-auto max-w-3xl text-center">
           <FadeUp>

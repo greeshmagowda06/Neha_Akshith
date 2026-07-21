@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence, useScroll, useSpring, useTransform } from "framer-motion";
 import { createFileRoute } from "@tanstack/react-router";
-import { FiCalendar, FiMapPin, FiMusic, FiPause, FiHeart } from "react-icons/fi";
+import { FiCalendar, FiMapPin, FiHeart } from "react-icons/fi";
 import { GiBigDiamondRing, GiLotus, GiIndianPalace } from "react-icons/gi";
 import kalash from "@/assets/kalash.png";
 import divider from "@/assets/divider.png";
@@ -384,7 +384,7 @@ function Fireworks({ show }: { show: boolean }) {
 /* ------------ Main ------------ */
 function Invitation() {
   const [intro, setIntro] = useState(true);
-  const [musicOn, setMusicOn] = useState(false);
+  
   const [reachedEnd, setReachedEnd] = useState(false);
   const { scrollYProgress } = useScroll();
   const progress = useSpring(scrollYProgress, { stiffness: 100, damping: 30 });
@@ -414,14 +414,6 @@ function Invitation() {
         style={{ width: progressWidth, boxShadow: "0 0 15px rgba(200,155,60,0.8)" }}
       />
 
-      {/* Music toggle */}
-      <button
-        onClick={() => setMusicOn((v) => !v)}
-        className="fixed bottom-6 right-6 z-40 flex items-center gap-2 rounded-full border border-gold/60 bg-ivory/90 px-5 py-3 font-serif text-sm text-maroon shadow-[0_10px_30px_-10px_rgba(90,14,26,0.4)] backdrop-blur transition hover:scale-105 hover:shadow-[0_0_30px_rgba(200,155,60,0.5)]"
-      >
-        {musicOn ? <FiPause /> : <FiMusic />}
-        {musicOn ? "Pause" : "Play Music"}
-      </button>
 
       {/* Hero */}
       <section className="relative flex min-h-screen items-center justify-center px-4 py-16">
@@ -621,13 +613,6 @@ function Invitation() {
         With love · Bengaluru · 2026
       </footer>
 
-      {/* Music */}
-      {musicOn && (
-        <audio
-          autoPlay loop
-          src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_5f27c0a3d1.mp3?filename=indian-classical-flute-116742.mp3"
-        />
-      )}
     </div>
   );
 }

@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence, useScroll, useSpring, useTransform } from "@/lib/motion";
-import { sendRsvpEmail } from "@/lib/rsvp-email";
 import { createFileRoute } from "@tanstack/react-router";
 import { FiCalendar, FiMapPin, FiHeart } from "react-icons/fi";
 import { GiBigDiamondRing, GiLotus, GiIndianPalace } from "react-icons/gi";
 import kalash from "@/assets/kalash.png";
 import divider from "@/assets/divider.png";
 import diya from "@/assets/diya.png";
+import couple from "@/assets/couple.jpeg";
 
 
 export const Route = createFileRoute("/")({ component: Invitation });
@@ -282,90 +282,6 @@ function Countdown() {
 }
 
 
-function RSVP() {
-  const [submitted, setSubmitted] = useState(false);
-  const [sending, setSending] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [ripple, setRipple] = useState<{ x: number; y: number } | null>(null);
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setError(null);
-    setSending(true);
-
-    const formData = new FormData(e.currentTarget);
-    const payload = {
-      name: String(formData.get("name") ?? "").trim(),
-      phone: String(formData.get("phone") ?? "").trim(),
-      guests: Number(formData.get("guests") ?? 1),
-      reception: formData.get("reception") === "on",
-      wedding: formData.get("wedding") === "on",
-    };
-
-    try {
-      await sendRsvpEmail({ data: payload });
-      setSubmitted(true);
-    } catch (submitError) {
-      setError(submitError instanceof Error ? submitError.message : "Unable to send RSVP right now.");
-    } finally {
-      setSending(false);
-    }
-  };
-
-  return (
-    <form
-      className="glass-card mx-auto max-w-xl space-y-5 rounded-3xl p-8 md:p-10"
-      onSubmit={handleSubmit}
-    >
-      <div>
-        <label className="mb-1 block font-serif text-sm uppercase tracking-[0.2em] text-gold">Name</label>
-        <input name="name" required className="w-full rounded-lg border border-gold/40 bg-ivory/70 px-4 py-3 font-serif text-maroon outline-none transition focus:border-gold focus:shadow-[0_0_20px_rgba(200,155,60,0.3)]" />
-      </div>
-      <div>
-        <label className="mb-1 block font-serif text-sm uppercase tracking-[0.2em] text-gold">Phone</label>
-        <input name="phone" required type="tel" className="w-full rounded-lg border border-gold/40 bg-ivory/70 px-4 py-3 font-serif text-maroon outline-none transition focus:border-gold focus:shadow-[0_0_20px_rgba(200,155,60,0.3)]" />
-      </div>
-      <div>
-        <label className="mb-1 block font-serif text-sm uppercase tracking-[0.2em] text-gold">Guests</label>
-        <input name="guests" required type="number" min={1} defaultValue={1} className="w-full rounded-lg border border-gold/40 bg-ivory/70 px-4 py-3 font-serif text-maroon outline-none transition focus:border-gold focus:shadow-[0_0_20px_rgba(200,155,60,0.3)]" />
-      </div>
-      <div className="grid grid-cols-2 gap-4">
-        <label className="flex items-center gap-3 rounded-lg border border-gold/40 bg-ivory/70 px-4 py-3 font-serif text-maroon">
-          <input name="reception" type="checkbox" defaultChecked className="h-4 w-4 accent-[#c89b3c]" />
-          Reception
-        </label>
-        <label className="flex items-center gap-3 rounded-lg border border-gold/40 bg-ivory/70 px-4 py-3 font-serif text-maroon">
-          <input name="wedding" type="checkbox" defaultChecked className="h-4 w-4 accent-[#c89b3c]" />
-          Wedding
-        </label>
-      </div>
-      <button
-        type="submit"
-        disabled={sending}
-        onClick={(e) => {
-          const r = (e.currentTarget as HTMLButtonElement).getBoundingClientRect();
-          setRipple({ x: e.clientX - r.left, y: e.clientY - r.top });
-          setTimeout(() => setRipple(null), 700);
-        }}
-        className="relative w-full overflow-hidden rounded-full bg-gradient-to-r from-[#8a6a24] via-[#c89b3c] to-[#f4d98a] px-8 py-4 font-display text-lg text-ivory shadow-[0_10px_30px_-10px_rgba(200,155,60,0.7)] transition hover:scale-[1.02] hover:shadow-[0_15px_40px_-10px_rgba(200,155,60,0.9)] disabled:cursor-not-allowed disabled:opacity-70"
-      >
-        {submitted ? "Blessing sent" : sending ? "Sending..." : "Send Blessing"}
-        {ripple && (
-          <span
-            className="pointer-events-none absolute rounded-full bg-white/60"
-            style={{
-              left: ripple.x, top: ripple.y,
-              width: 20, height: 20, transform: "translate(-50%,-50%)",
-              animation: "glow-pulse 0.7s ease-out forwards",
-            }}
-          />
-        )}
-      </button>
-      {error && <p className="text-center font-serif text-sm text-red-700">{error}</p>}
-    </form>
-  );
-}
-
 function Fireworks({ show }: { show: boolean }) {
   if (!show) return null;
   return (
@@ -607,13 +523,21 @@ function Invitation() {
 
       <Divider />
 
-      {/* RSVP */}
+      {/* Couple Photo */}
       <section className="px-4 py-16">
         <FadeUp>
-          <h2 className="mb-2 text-center font-display text-4xl text-maroon md:text-5xl">RSVP</h2>
-          <p className="mb-12 text-center font-serif italic text-maroon/60">Kindly let us know</p>
+          <h2 className="mb-12 text-center font-display text-4xl text-maroon md:text-5xl">Our Moment</h2>
         </FadeUp>
-        <FadeUp delay={0.2}><RSVP /></FadeUp>
+        <FadeUp delay={0.2}>
+          <div className="mx-auto max-w-5xl overflow-hidden rounded-3xl border border-gold/30 bg-ivory/30 p-2 shadow-[0_20px_50px_-25px_rgba(90,14,26,0.45)] md:p-3">
+            <img
+              src={couple}
+              alt="Neha and Akshith"
+              className="h-auto w-full rounded-[1.25rem] object-cover"
+              loading="lazy"
+            />
+          </div>
+        </FadeUp>
       </section>
 
       <Divider />
